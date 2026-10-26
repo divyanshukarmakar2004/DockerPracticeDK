@@ -9,29 +9,28 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // SCM checkout step
                 echo 'Checking out source code from GitHub...'
             }
         }
 
         stage('Verify Environment') {
             steps {
-                // Verify Docker is running on your Windows machine
-                bat 'docker --version'
+                // Use 'sh' for Linux/Unix environments
+                sh 'docker --version'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                // Build the image using the local Dockerfile
-                bat "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
+                // Use 'sh' for Linux/Unix environments
+                sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
             }
         }
 
         stage('Smoke Test & Health Check') {
             steps {
-                // Run a temporary container to verify image viability
-                bat "docker run --rm ${IMAGE_NAME}:${IMAGE_TAG} python --version"
+                // Use 'sh' for Linux/Unix environments
+                sh "docker run --rm ${IMAGE_NAME}:${IMAGE_TAG} python --version"
             }
         }
     }
